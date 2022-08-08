@@ -1,0 +1,34 @@
+version: "3.0"
+ 
+services: 
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 3000:3000
+    volumes: 
+      - .:/app
+      - '/app/node_modules'
+    depends_on: 
+      - mysql_server
+  
+  mysql_server:
+    image: mysql:8.0
+    environment: 
+      - MYSQL_DATABASE=restapi
+      - MYSQL_USER=root
+      - host=localhost
+      - PMA_PORT=3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.1.1
+    environment:
+      PMA_HOST: localhost
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ""
+
+
+
+  
